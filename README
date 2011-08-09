@@ -1,7 +1,8 @@
 TRipNG
 
 A highly flexible Python application for ripping, encoding and tagging
-one's music library collection.
+one's music library collection; TRipNG is the successor to the Perl program
+'trip', but has several new features and more extensive capabilities.
 
 Further details will be forthcoming.
 
