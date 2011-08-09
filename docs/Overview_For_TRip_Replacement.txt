@@ -1,0 +1,89 @@
+TRip Replacement Overview
+=========================
+
+Reason for replacement:
+
+    TRip has been sufficient in the past, but certain deficiencies have
+    driven the need for a replacement, since the current TRip code is
+    somewhat impenetrable and difficult to extend.  The need for a very
+    flexible command line interface with unique capabilities that have
+    not been found in any other current ripping/encoding applications
+    out there have spurred the development of this new program.
+
+
+Features of replacment:
+
+  - Able to rip a CD and encode into multiple formats in a single run
+    of the program.  (Required)
+
+  - Able to encode into multiple formats simultaneously.  (Considered)
+
+  - Able to retain lossless format files for future re-encoding;
+    current planned format is FLAC.  (Required)
+
+  - Comprehensive tagging within all different encode formats to retain
+    information for a given CD.  (Required)
+
+  - Interactive editor to allow user to modify the tagging information
+    to be written to encoded files, including combining various conti-
+    guous tracks into a single track while retaining all information
+    from the original individual tracks.  (Required)
+
+  - Able to restart from a program failure or abort.  (Considered)
+
+  - API to allow graphical interfaces to be easily constructed for
+    users who prefer not using a command line.  (Considered)
+
+  - Normalization to even out volume levels of one's CD collection to
+    a desired level.  (Required)
+
+  - Fully configurable re-tagging of already encoded files.  (Required)
+
+
+User interface:
+
+  - Command line based.  User should have a lot of control via options
+    as to what gets done and possibly even how it's done.
+
+  - Configurable editor (vi or emacs to start with) for editing CDDB
+    information.  Potentially some useful macros should be created for
+    this to ease configuration (like joining multiple tracks into one)
+    for the user.
+
+  - Simple yet informative progress information.
+
+
+Internals:
+
+  - Modular design to allow full separation of the ripping and encoding
+    processes, as well as handling different ripping and encoding soft-
+    ware (initially cdda2wav and cdparanoia(?) for ripping; flactools,
+    oggenc, and LAME for encoding).
+
+
+Notes:
+
+  - assume infinite disk space; don't want to play games with it, disk
+    is cheap
+
+  - potentially multiple tools to handle all capabilities
+
+  - decide what order the various processes must happen in, which stages
+    user input will be needed, what needs to be customizable and what
+    doesn't
+
+  - Format to use for combined tracks:
+
+      SEGUE 7: A Flash Before My Eyes
+      TRACK 1: The Ballet Of The Impact
+      TRACK 2: I Wouldn't Let It Go
+      TRACK 3: Surfing Down The Avalanche
+      TRACK 4: She Is Everything
+      TRACK 5: Climbing Up That Hill
+      TRACK 6: Letting Go
+      TRACK 7: Of The Beauty Of It All
+
+    The SEGUE <num> means the next <num> tracks should be combined with
+    the title given.  The track titles will be kept in a comments field
+    (or as indexes, if the format has such a thing).
+
