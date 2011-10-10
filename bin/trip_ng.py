@@ -30,7 +30,7 @@ import os.path
 basedir = os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0])))
 sys.path.insert(0, os.path.join(basedir, 'lib', 'python'))
 
-import tripng.tripconf as tripconf
+import trip_ng.tripconf as tripconf
 
 parser = argparse.ArgumentParser(description='Program to rip and encode CDs')
 parser.add_argument('--device', '-d')
