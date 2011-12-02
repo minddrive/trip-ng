@@ -1,0 +1,50 @@
+The basic flow for the program will always begin with the following:
+
+  - Do initial parsing of command line; if configuration file is
+    found, ensure it exists and load in information
+  - Finish parsing command line
+
+For the normal flow of ripping and encoding a disc, the following occurs:
+
+  - Ensure requested ripped and encoder (or encoders) exist
+  - If '--retain-lossless' was set, check to see if flac encoder
+    is available; if it is available add to encoder list
+  - Ensure media device exists and scan CD info ID
+  - Do a lookup in the data for CD info ID and retrieve information,
+    else attempt to connect to remote CDDB server for information
+  - Once CDDB lookup done (or times out - give reasonable time),
+    start up an editor with information from database, CDDB
+    or default text
+  - After editing is complete, save information to database
+    with CD info ID, then start ripper
+  - As each track (or segue) is complete, run the track through
+    the normalization program if '--normalize' option was given,
+    then start encoding the new ripped file:
+      - Ensure encoding hasn't already been performed (for example,
+        using ripper options to output to FLAC and wanting to
+        encode into the FLAC format)
+  - Once encoding is complete for a given encoder, tag the new
+    encoded files with the information from the editing session
+    and rename file based on tag information
+  - After all encoding is complete, remove original ripped files
+    unless they are in the format used for '--retain-lossless'
+
+[FUTURE] For encoding from lossless files, the following occurs:
+
+  - If a CD info ID was given, look for it in the database
+  - If no results are found, or ID wasn't given, attempt to
+    retrieve data from lossless files themselves
+  - Start up an editor with the information retrieved from the
+    database or files
+  - Ensure changes are valid (segues may not be created nor
+    destroyed, and tracks must match number being re-encoded),
+    then save information to database only if it was retrieved
+    from there (under the CD info ID)
+  - Encode each lossless file into the requested encoding formats
+  - Once encoding is complete for a given encoder, tag the new
+    encoded files with the information from the editing session
+    and rename file based on tag information
+
+[FUTURE] For re-tagging files, the following occurs:
+
+  - TO BE FILLED IN LATER
