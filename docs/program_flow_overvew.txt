@@ -31,6 +31,7 @@ For the normal flow of ripping and encoding a disc, the following occurs:
 
 [FUTURE] For encoding from lossless files, the following occurs:
 
+  - Ensure encoder (or encoders) exist
   - If a CD info ID was given, look for it in the database
   - If no results are found, or ID wasn't given, attempt to
     retrieve data from lossless files themselves
