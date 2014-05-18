@@ -5,7 +5,7 @@
 """Manage ripper applications"""
 
 from trip_ng.exceptions import TRipNGRipperError
-from trip_ng.util import verify_external_programs, verify_media_device
+from trip_ng.utils import verify_external_programs, verify_media_device
 
 
 class Ripper(object):

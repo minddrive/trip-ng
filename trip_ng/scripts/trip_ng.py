@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
-# Copyright (C) 2011 Kenneth Lareau, Nicholas Long
+# Copyright (C) 2011-2014 Kenneth Lareau
 #
 # All rights reserved.
 
@@ -11,25 +11,15 @@
 
 import sys
 
-# Only latest version of Python 2.x (2.7) is supported
+# Only latest versions of Python 3.x (3.3+) is supported
 pyvers = sys.version_info[:2]
 
-if pyvers < (2, 7):
-    raise RuntimeError('Python 2.7 is required to use this program')
-
-if pyvers[0] == 3:
-    raise RuntimeError('Python 3.x is not supported at this time, please '
-                       'use Python 2.7')
-
+if pyvers < (3, 3):
+    raise RuntimeError('Python 3.3 or later is required to use this program')
 
 # We have the right Python version, move along...
 import argparse
-import ConfigParser
-import os.path
-
-# Temporary for now... maybe?
-basedir = os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0])))
-sys.path.insert(0, os.path.join(basedir, 'lib', 'python'))
+import configparser
 
 import trip_ng.tripconf as tripconf
 
@@ -45,13 +35,12 @@ def parse_command_line():
                              help='Configuration file to use')
     conf_args, remaining_argv = conf_parser.parse_known_args()
 
-    defaults = { 'ripper' : 'cdda2wav',
-                 'encoder' : [ 'lame' ], }
+    defaults = dict(ripper='cdda2wav', encoder=['lame'])
 
     try:
         with open(conf_args.configuration) as conf_file:
-            config = ConfigParser.SafeConfigParser()
-            config.readfp(conf_file)
+            config = configparser.ConfigParser()
+            config.read_file(conf_file)
             defaults.update(config.items('TRipNG'))
 
             # Make sure 'encoder' variable is a list
@@ -63,8 +52,10 @@ def parse_command_line():
         if conf_args.configuration != tripconf.default_conf:
             conf_error = True
 
-    parser = argparse.ArgumentParser(parents=[ conf_parser ],
-                                 description='Program to rip and encode CDs')
+    parser = argparse.ArgumentParser(
+        parents=[conf_parser],
+        description='Program to rip and encode CDs'
+    )
 
     parser.add_argument('--device', '-d', help='Media device to use')
     parser.add_argument('--ripper', '-r', choices=tripconf.rippers,
@@ -79,7 +70,7 @@ def parse_command_line():
 
     if conf_error:
         parser.error('Configuration file %s does not exist'
-                     % args.configuration)
+                     % conf_args.configuration)
 
     parser.set_defaults(**defaults)
     args = parser.parse_args(remaining_argv)
@@ -99,5 +90,5 @@ def parse_command_line():
 
 if __name__ == '__main__':
 
-    args = parse_command_line()
-    print args
+    tripng_args = parse_command_line()
+    print(tripng_args)
